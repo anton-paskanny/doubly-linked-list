@@ -25,11 +25,11 @@ class LinkedList {
     }
 
     head() {
-      return this._head.data;
+      return this._head != null ? this._head.data : false;
     }
 
     tail() {
-      return this._tail.data;
+      return this._tail != null ? this._tail.data : false;
     }
 
     at(index) {
@@ -52,7 +52,6 @@ class LinkedList {
       let indexNode = null;
       let indexFindNode = null;
 
-      /*---find beforeNode and indexNode---*/
       while (count <= index) {
         if (index === 1) {
             indexNode = currentNode;
@@ -104,55 +103,33 @@ class LinkedList {
       }
 
       this.length = 0;
+
+      return this;
     }
 
     deleteAt(index) {
       let currentNode = this._head;
       let count = 1;
-      let beforeNodeToDelete = null;
-      let afterNodeToDelete = null;
-      let nodeToDelete = null;
-      let indexFindNode = null;
 
-      if (this.length >= 1) {
-        if (index === 1) {
-            if (currentNode.next) {
-                this._head = currentNode.next;
-                currentNode.next = null;
-                currentNode.data = null;
-                afterNodeToDelete = currentNode.next;
-                afterNodeToDelete.prev = null;
-                currentNode = afterNodeToDelete;
-            } else {
-              currentNode.data = null;
-              this._head = null;
-              this._tail = null;
-              this.length = 0;
+      while (count <= this.length) {
+        if (index === count) {
+            if (currentNode.prev) {
+              currentNode.prev.next = currentNode.next;
             }
-          } else if (index === this.length) {
-              this._tail = currentNode.prev;
-              this._tail.next = null;
-          } else {
-              while (count <= index) {
-                currentNode = currentNode.next;
-                count++;
-              }
 
-              beforeNodeToDelete = currentNode.prev;
-              nodeToDelete = currentNode;
-              afterNodeToDelete = currentNode.next;
+            if (currentNode.next) {
+              currentNode.next.prev = currentNode.prev;
+            }
 
-              beforeNodeToDelete.next = afterNodeToDelete;
-              afterNodeToDelete.prev = beforeNodeToDelete;
-
-              nodeToDelete.prev = null;
-              nodeToDelete.next = null;
-              nodeToDelete.data = null;
-
-          }
+            this.length--;
+            break;
         }
 
-        return this;
+        currentNode = currentNode.next;
+        count++;
+      }
+
+      return this;
     }
 
     reverse() {
@@ -182,8 +159,8 @@ class LinkedList {
 
           count++;
 
-        } // end while
-      } // end if
+        }
+      }
 
       return this;
     }
