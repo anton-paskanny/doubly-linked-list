@@ -25,11 +25,11 @@ class LinkedList {
     }
 
     head() {
-      return this._head != null ? this._head.data : false;
+      return this._head != null ? this._head.data : null;
     }
 
     tail() {
-      return this._tail != null ? this._tail.data : false;
+      return this._tail != null ? this._tail.data : null;
     }
 
     at(index) {
@@ -84,24 +84,8 @@ class LinkedList {
     }
 
     clear() {
-      let count = 1;
-      let currentNode = this._head;
-      let nextNode = currentNode.next;
-
-      while (count <= this.length) {
-
-        currentNode.data = null;
-        currentNode.prev = null;
-        currentNode.next = null;
-
-        if (nextNode) {
-          currentNode = nextNode;
-          nextNode = nextNode.next;
-        }
-
-        count++;
-      }
-
+      this._head = null;
+      this._tail = null;
       this.length = 0;
 
       return this;
